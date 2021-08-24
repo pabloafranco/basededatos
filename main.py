@@ -12,6 +12,14 @@ USERS_TABLE = """CREATE TABLE users(
 )
 """
 
+users = [
+    ("user1", "password", "user1.gmail.com"),
+    ("user2", "password", "user2.gmail.com"),
+    ("user3", "password", "user3.gmail.com"),
+    ("user4", "password", "user4.gmail.com"),
+    ("user5", "password", "user5.gmail.com"),
+]
+
 if __name__ == '__main__':
     
     try:
@@ -27,13 +35,31 @@ if __name__ == '__main__':
             cursor.execute(DROP_TABLE_USERS)
             cursor.execute(USERS_TABLE)
 
-        query =  "INSERT INTO users ( username, password, email )  VALUES (%s, %s, %s)"
-        values = ("eduardo_gpg", "123", "eduardo@codigofacilito.com")
 
-        cursor.execute(query, values)
-        connect.commit()
+            query =  "INSERT INTO users ( username, password, email )  VALUES (%s, %s, %s)"
+            #values = ("eduardo_gpg", "123", "eduardo@codigofacilito.com")
 
-        print ('Conexion realizad en forma exitosa')
+            #cursor.execute(query, values)
+            #connect.commit()
+
+            #for user in users:
+            #    cursor.execute(query, user)
+
+            cursor.executemany(query, users)
+            connect.commit()
+
+            query = "SELECT * from USERS"
+            #query = "SELECT * from USERS LIMIT 3"
+            rows = cursor.execute(query)
+
+            #print (rows)
+            #for users in cursor.fetchall():
+            #for users in cursor.fetchmany(2):
+            #    print (users)
+            user = cursor.fetchone()
+            print (user)
+
+        #print ('Conexion realizad en forma exitosa')
 
     except pymysql.err.OperationalError as err:
         print ('No fue posible conectarse a la base de datos');
