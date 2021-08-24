@@ -48,16 +48,35 @@ if __name__ == '__main__':
             cursor.executemany(query, users)
             connect.commit()
 
-            query = "SELECT * from USERS"
+            #query = "SELECT * from USERS"
             #query = "SELECT * from USERS LIMIT 3"
-            rows = cursor.execute(query)
+            #rows = cursor.execute(query)
+
+
+            query = "UPDATE users SET username = %s WHERE id = %s"
+            values = ("Cambios de UserName", 1)
+
+            cursor.execute(query, values)
+            connect.commit()
+
 
             #print (rows)
             #for users in cursor.fetchall():
             #for users in cursor.fetchmany(2):
             #    print (users)
+            query = "SELECT * from USERS"
+            #query = "SELECT * from USERS LIMIT 3"
+            rows = cursor.execute(query)
             user = cursor.fetchone()
             print (user)
+
+            query = "DELETE FROM users WHERE id = %s"
+            
+
+            cursor.execute(query, (5,))
+            connect.commit()
+
+
 
         #print ('Conexion realizad en forma exitosa')
 
